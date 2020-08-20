@@ -3,35 +3,25 @@ def merge(arrA, arrB):
     elements = len(arrA) + len(arrB)
     merged_arr = []
 
-    while len(merged_arr) < elements:
-        if len(arrA) > 0 and len(arrB) > 0:
-            if arrA[0] < arrB[0]:
-                merged_arr.append(arrA[0])
-                arrA.pop()  
-            elif arrA[0] > arrB[0]:
-                merged_arr.append(arrB[0])
-                arrB.pop()  
-        elif len(arrA) > 0 and len(arrB) == 0:
-            merged_arr.append(arrA[0])
-        elif len(arrB) > 0 and len(arrA) == 0:
-            merged_arr.append(arrB[0])
-
+    while len(arrA) > 0 and len(arrB) > 0:
+        if arrA[0] > arrB[0]:
+            merged_arr.append(arrB.pop(0))
+        else:
+            merged_arr.append(arrA.pop(0))
+    while 0 < len(arrA):
+        merged_arr.append(arrA.pop(0))
+    while 0 < len(arrB):
+        merged_arr.append(arrB.pop(0))
     return merged_arr
 
 # TO-DO: implement the Merge Sort function below recursively
 def merge_sort(arr):
     # Your code here
-    while len(arr) > 1:
-        mid_point = len(arr) // 2
-        left_side = arr[:mid_point]
-        right_side = arr[mid_point:]
-
-        if len(arr) > 2:
-            merge_sort(left_side)
-            merge_sort(right_side)
-        elif len(arr) == 2:
-            if right_side > left_side:
-                arr[0], arr[1] = arr[1], arr[0]
+    if len(arr) > 1:
+        middle = len(arr) // 2
+        left = arr[:middle]
+        right = arr[middle:]
+        return merge(merge_sort(left), merge_sort(right))
     return arr
 
 # STRETCH: implement the recursive logic for merge sort in a way that doesn't 
